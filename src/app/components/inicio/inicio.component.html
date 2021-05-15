@@ -1,0 +1,95 @@
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Registro de Transaciones</a>
+      </div>
+    </nav>
+
+    <div class="container">
+     
+    <form class="row g-3 justify-content-center m-5" #useForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="col-auto">
+            <label for="inputPassword2" class="visually-hidden">Descripcion</label>
+            <input type="text" class="form-control" placeholder="Descripcion" name="description" #description="ngModel" [(ngModel)]="Registro.description" required >
+          </div>
+        
+        <div class="col-auto">
+          <label for="inputPassword2" class="visually-hidden">Monto</label>
+          <input type="text" class="form-control" placeholder="Monto" name="monto" #monto="ngModel" [(ngModel)]="Registro.monto" required>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-3" [disabled]="!useForm.valid">Guardar</button>
+        </div>
+      </form>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id de transacción</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Monto</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Registros">
+            <th scope="row">{{data.NU_ID}}</th>
+            <td>{{data.VA_DESCRIPTION}}</td>
+            <td>{{data.VA_AMOUNT}}</td>
+            <td>{{data.FE_CREATE_ON}}</td>
+            
+            <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="modal(data.NU_ID)">Editar
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn red waves-effect waves-light right" type="submit" name="action" (click)="deleteResquest(data.NU_ID)">Borrar
+              <i class="bi bi-trash"></i>
+            </button>
+          </tr>
+         
+
+        </tbody>
+      </table>
+    </div>
+
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Actualizar transacción</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+  
+        
+      
+            <form class=" justify-content-center m-5" >
+              <div class="col-auto">
+                  <label for="inputPassword2" class="visually-hidden">id de transacción</label>
+                  <input type="text" class="form-control" placeholder="Id"  [value]="RegistrosUpdate.NU_ID" readonly >
+                </div>
+                <div class="col-auto">
+                  <label for="inputPassword2" class="visually-hidden">Monto</label>
+                  <input type="text" class="form-control"  name="monto" [value]="RegistrosUpdate.VA_DESCRIPTION" [(ngModel)]="Registro.description" >
+                </div>
+              <div class="col-auto">
+                <label for="inputPassword2" class="visually-hidden">Monto</label>
+                <input type="text" class="form-control"  name="monto" [value]="RegistrosUpdate.VA_AMOUNT" [(ngModel)]="Registro.monto" >
+              </div>
+             
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Ventana</button>
+            <button type="submit" class="btn btn-primary"   (click)="postUpdate(id)" >Guardar Actualizacion</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
